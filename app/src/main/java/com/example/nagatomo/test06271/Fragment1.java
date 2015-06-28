@@ -2,6 +2,8 @@ package com.example.nagatomo.test06271;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +26,21 @@ class Fragment1 extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tab1_fragment, container, false);
 
-        text = (TextView) v.findViewById(R.id.tab1text);
-        text.setText("TAB1の内容（fragment）");
+       // text = (TextView) v.findViewById(R.id.tab1text);
+       // text.setText("TAB1の内容（fragment）");
 
         return v;
     }
+
+    public void onDestroyView() {
+        super.onDestroyView();
+        FragmentManager fm = getActivity().getFragmentManager();
+        Fragment fragment = (fm.findFragmentById(R.id.booklistFragment1));
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.remove(fragment);
+        ft.commit();
+    }
+
+
 }
 

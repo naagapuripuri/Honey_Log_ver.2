@@ -36,6 +36,10 @@ public class MainActivity extends Activity {
         actionBar.addTab(actionBar.newTab().setText("タブタイトル2")
                 .setTabListener(new MyTabListener(fragmet2)));
 
+        Fragment fragmet3 = new Fragment3();
+        actionBar.addTab(actionBar.newTab().setText("タブタイトル3")
+                .setTabListener(new MyTabListener(fragmet3)));
+
     }
 
 

@@ -8,6 +8,6 @@
         android:id="@+id/booklistFragment4"
         android:name="com.example.nagatomo.test06271.MyListFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

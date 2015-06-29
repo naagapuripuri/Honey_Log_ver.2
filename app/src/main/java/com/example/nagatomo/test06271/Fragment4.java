@@ -6,26 +6,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.app.FragmentTransaction;
 import android.app.FragmentManager;
-/**
- * Created by Nagatomo on 2015/06/28.
- */
+
+import java.util.ArrayList;
+
 public class Fragment4 extends Fragment {
+
     static final String TAG = "FragmentTest";
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tab4_fragment, container, false);
-
-      //  MyListFragment fragment = new MyListFragment();
-        //MyListFragment details = (MyListFragment)
-          //      getFragmentManager().findFragmentById(R.id.booklistFragment4);
-      //  FragmentManager manager = getFragmentManager();
-      //  FragmentTransaction tx = manager.beginTransaction();
-       // tx.add(R.id.booklistFragment4, fragment, "list_fragment");
-      //  tx.commit();
 
         return v;
     }

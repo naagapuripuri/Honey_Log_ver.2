@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.app.ActionBar;
 import android.app.Fragment;
 
+import java.util.ArrayList;
+
 public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class MainActivity extends Activity {
 
         Fragment fragmet4 = new Fragment4();
         actionBar.addTab(actionBar.newTab().setText("タブタイトル4").setTabListener(new MyTabListener(fragmet4)));
+
     }
 }
 

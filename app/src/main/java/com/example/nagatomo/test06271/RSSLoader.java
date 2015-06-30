@@ -1,38 +1,24 @@
 package com.example.nagatomo.test06271;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.util.Log;
-import android.util.Xml;
-import android.os.StrictMode;
-import org.xmlpull.v1.XmlPullParser;
+/**
+ * Created by Nagatomo on 2015/06/30.
+ */
 import android.content.AsyncTaskLoader;
+import android.content.Context;
+import android.util.Log;
+
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import android.app.LoaderManager;
-import android.content.Loader;
-/**
- * Created by Nagatomo on 2015/06/28.
- */
-public class DetailActivity extends Activity {
 
-    int count =0;
-    private String target;
-    private String ss;
-    private String ss3;
-    private String ss4[] = new String[4];
-    private String tagurl[] = new String[20];
+public class RSSLoader extends AsyncTaskLoader<String[]>{//非同期処理を行うクラス。非同期で動作するクラス。必要なのはsuperにコンテキストを渡すコンストラクタと非同期処理を行うloadInBackground()。
+    String[] target;
+    String src;
+    public RSSLoader(Context context) {
+        super(context);
+    }
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        System.out.println("標準出力です。");
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
+    public String[] loadInBackground() { // 非同期で動くワーカーの作成。Loderが実行するバックグラウンド処理。UIスレッドとは別のスレッドで実行されるメソッド
         HttpURLConnection http = null;
         InputStream in = null;
         try {
@@ -43,7 +29,8 @@ public class DetailActivity extends Activity {
             http.setRequestMethod("GET");                      // リクエストメソッドの設定 （デフォルトが GET メソッドなので省略可）。プロトコルの設定
             http.connect();                                    //接続する．
             in = http.getInputStream();                        // ネット上のファイルを開く。
-            String src = "";                                   // InputStreamから取得したbyteデータを文字列にして保持するための変数。初期値として空文字（長さが0の文字列）
+
+            src = "";                                   // InputStreamから取得したbyteデータを文字列にして保持するための変数。初期値として空文字（長さが0の文字列）
             byte[] line = new byte[1024];                      // InputStreamからbyteデータを取得するための変数
             int size;
             while (true) {                                     // while内で、InputStreamからのデータを文字列として取得する
@@ -52,9 +39,6 @@ public class DetailActivity extends Activity {
                     break;
                 src += new String(line);
             }
-
-            System.out.println("標準出力です。2");
-            System.out.println(src);
 
         } catch (Exception e) {
             //  web.setText(e.toString());
@@ -67,6 +51,15 @@ public class DetailActivity extends Activity {
                     in.close();
             } catch (Exception e) {
             }
-          }
+        }
+        target = new String[10];
+        target[0] = src;
+        return target;
     }
+
+    @Override
+    protected void onStartLoading() {
+        forceLoad();
+    }
+
 }

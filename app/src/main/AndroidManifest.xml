@@ -20,5 +20,5 @@
             android:label="DetailActivity" >
         </activity>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

@@ -12,9 +12,6 @@ import java.util.List;
 
 public class FragListAdapter extends ArrayAdapter<Item> {
     private LayoutInflater mInflater;
-    private TextView mTitle;
-    private TextView mDescr;
-    private TextView mPubDate;
     //コンストラクタ
     public FragListAdapter(Context context, List<Item> objects) {//ArrayAdapter クラスのコンストラクターで、使わない引数（textViewResourceId）の分を除いたコンストラクターを作っておく。基本的に、オブジェクトのリストか、オブジェクトの配列を受け取れるようにすればよい。
         super(context, 0, objects);// 第2引数はtextViewResourceIdとされていますが、カスタムリストアイテムを使用する場合は特に意識する必要のない引数です。ArrayAdapter クラスのコンストラクターを呼び出す。このとき、textViewResourceId は指定されていないので、0 にしておく。

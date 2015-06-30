@@ -11,6 +11,7 @@ import android.app.Fragment;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
+    private static final String RSS_FEED_URL = "http://news.livedoor.com/topics/rss/top.xml ";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,18 +24,24 @@ public class MainActivity extends Activity {
 
         Fragment fragment1 = new Fragment1();
         ActionBar.Tab tab1 = actionBar.newTab();
-        tab1.setText("タブタイトル1");
+        tab1.setText("Top");
         tab1.setTabListener(new MyTabListener(fragment1));
         actionBar.addTab(tab1);
 
         Fragment fragmet2 = new Fragment2();
-        actionBar.addTab(actionBar.newTab().setText("タブタイトル2").setTabListener(new MyTabListener(fragmet2)));
+        actionBar.addTab(actionBar.newTab().setText("Japan").setTabListener(new MyTabListener(fragmet2)));
 
         Fragment fragmet3 = new Fragment3();
-        actionBar.addTab(actionBar.newTab().setText("タブタイトル3").setTabListener(new MyTabListener(fragmet3)));
+        actionBar.addTab(actionBar.newTab().setText("overseas").setTabListener(new MyTabListener(fragmet3)));
 
         Fragment fragmet4 = new Fragment4();
-        actionBar.addTab(actionBar.newTab().setText("タブタイトル4").setTabListener(new MyTabListener(fragmet4)));
+        actionBar.addTab(actionBar.newTab().setText("IT/経済").setTabListener(new MyTabListener(fragmet4)));
+        Fragment fragmet5 = new Fragment5();
+        actionBar.addTab(actionBar.newTab().setText("entertainment").setTabListener(new MyTabListener(fragmet5)));
+
+
+
+
 
     }
 }

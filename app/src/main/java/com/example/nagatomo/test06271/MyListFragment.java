@@ -19,8 +19,18 @@ public class MyListFragment extends ListFragment implements LoaderCallbacks<Stri
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getLoaderManager().initLoader(0, null, this);//ローダーを実行
+        //initLoaderメソッドを利用し、このActivityに対応づけるLoaderの初期化を行う。
+        //LoaderManagerのインスタンスは、Activityごとに1つ割り当てられ、何度getLoaderManagerを実行しても、同じLoaderManagerインスタンスが戻される。
+        //initLoader(int id, Bundle bundle, LoaderCallback)
+        //id: Loaderを識別するID値（onCreateLoaderメソッドの第1引数に渡される）
+        //bundle:パラメータ格納用（onCreateLoaderメソッドの第2引数に渡される）
+        //LoaderCallback:LoaderCallbackインターフェースを実装したクラス
+
+
+
+
 /* ここから*/
-        List<Item> objects = new ArrayList<Item>();/////
+   /*///////     List<Item> objects = new ArrayList<Item>();/////
 
            //   for(int l=0;l<4;l++){
            //     System.out.println(tagurl[l]);
@@ -49,10 +59,10 @@ public class MyListFragment extends ListFragment implements LoaderCallbacks<Stri
           for(int j = 0 ;j<3 ;j++){
             objects.add(item[j]);
           }
-          adapter = new FragListAdapter(getActivity(), objects);
-          /* ここまでを消して下の1文と①を入れると、MyListの方とりにいく*////
+          adapter = new FragListAdapter(getActivity(), objects);  ///////*/
+          /* ここまでを消して下の1文と①を入れると、MyListの方とりにいく*///
              //         adapter = new ArrayAdapter<String>( getActivity(), android.R.layout.simple_list_item_1,MyList.Data);
-          setListAdapter(adapter);
+     ///////////////     setListAdapter(adapter);
         //getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
@@ -90,6 +100,38 @@ public class MyListFragment extends ListFragment implements LoaderCallbacks<Stri
         //setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, data) );
         System.out.println("finish");
         System.out.println(data[0]);
+        List<Item> objects = new ArrayList<Item>();/////
+
+        //   for(int l=0;l<4;l++){
+        //     System.out.println(tagurl[l]);
+        // }
+
+        Item item1 = new Item();
+        item1.setTitle("ひとつめ");
+
+        Item item2 = new Item();
+        item2.setTitle("2つめ");
+
+        String s3 = "さん";
+        Item item3 = new Item();
+        item3.setTitle(s3);
+
+        Item item[] = new Item[20];
+        for(int i=1; i<20; i++){
+            item[i] = new Item();
+            item[i].setTitle(data[i]);
+        }
+      //  item[0].setTitle("４");
+       // item[1].setTitle("ご");
+       // item[2].setTitle("しっくす");
+        objects.add(item1);
+        objects.add(item2);
+        objects.add(item3);
+        for(int j = 1 ;j<15 ;j++){
+            objects.add(item[j]);
+        }
+        adapter = new FragListAdapter(getActivity(), objects);
+        setListAdapter(adapter);
     }
 
     @Override

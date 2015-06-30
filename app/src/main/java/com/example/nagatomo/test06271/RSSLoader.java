@@ -6,22 +6,44 @@ package com.example.nagatomo.test06271;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.util.Log;
+import android.util.Xml;
+
+import org.xmlpull.v1.XmlPullParser;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 
 public class RSSLoader extends AsyncTaskLoader<String[]>{//非同期処理を行うクラス。非同期で動作するクラス。必要なのはsuperにコンテキストを渡すコンストラクタと非同期処理を行うloadInBackground()。
     String[] target;
     String src;
+    int count =0;
+    private String[] data;
     public RSSLoader(Context context) {
         super(context);
     }
+
+    @Override
+    public void deliverResult(String[] data) {
+        if (isReset()) {
+            return;
+        }
+
+        this.data = data;
+        super.deliverResult(data);
+    }
+
+
+
+
+
     @Override
     public String[] loadInBackground() { // 非同期で動くワーカーの作成。Loderが実行するバックグラウンド処理。UIスレッドとは別のスレッドで実行されるメソッド
         HttpURLConnection http = null;
         InputStream in = null;
         try {
+      /*
             //URL で指定されたコンテンツを HTTP で取得する大まかな流れは以下
             URL url ;                                          //クラスの参照型変数の宣言
             url = new URL("http://news.livedoor.com/topics/rss/top.xml");                  //クラスのインスタンスを生成し、その参照を参照型変数に入れる。URL オブジェクトを生成する。
@@ -39,7 +61,30 @@ public class RSSLoader extends AsyncTaskLoader<String[]>{//非同期処理を行
                     break;
                 src += new String(line);
             }
+*/
+            target = new String[20];
 
+            XmlPullParser xmlPullParser = Xml.newPullParser();
+            URL Url = new URL("http://news.livedoor.com/topics/rss/top.xml");
+            URLConnection connection = Url.openConnection();
+            xmlPullParser.setInput(connection.getInputStream(), "UTF-8");
+
+            int eventType;
+            while ((eventType = xmlPullParser.next()) != XmlPullParser.END_DOCUMENT) {
+                String tag = null;
+                String tag2 = null;
+
+                if (eventType == XmlPullParser.START_TAG) {
+                    tag = xmlPullParser.getName();;
+                    if("title".equals(tag)){
+                        tag2 = xmlPullParser.nextText();
+                        Log.d("XmlPullParserSampleUrl", tag2);
+                        target[count] = tag2;
+                        count = count +1;
+
+                    }
+                }
+            }
         } catch (Exception e) {
             //  web.setText(e.toString());
             Log.d("catch", "エラー");
@@ -52,14 +97,36 @@ public class RSSLoader extends AsyncTaskLoader<String[]>{//非同期処理を行
             } catch (Exception e) {
             }
         }
-        target = new String[10];
-        target[0] = src;
+
+        //target[0] = src;
         return target;
     }
 
+  //  @Override
+  //  protected void onStartLoading() {// Loader開始時に呼ばれる
+      //  forceLoad();// Loaderを開始
+    //}
+
     @Override
-    protected void onStartLoading() {
-        forceLoad();
+    protected void onStartLoading() {//// 非同期処理の開始前。ActivityまたはFragment復帰時（バックキーで戻る、ホーム画面から戻る等）に再実行されるためここで非同期処理を行うかチェック
+        if (data != null) {
+            deliverResult(data);
+        }
+
+        if (takeContentChanged() || data == null) {
+            forceLoad();
+        }
     }
 
+    @Override
+    protected void onStopLoading() {
+        cancelLoad();
+    }
+
+    @Override
+    protected void onReset() {
+        super.onReset();
+        onStopLoading();
+        data = null;
+    }
 }

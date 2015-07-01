@@ -1,20 +1,36 @@
 package com.example.nagatomo.test06271;
 
+import android.app.AlertDialog;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.ListFragment;
+import android.text.Html;
+import android.view.Gravity;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ListView;
 import android.content.Intent;
 import java.util.List;
 import java.util.ArrayList;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Loader;
+import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.example.nagatomo.test06271.HandleableLinkMovementMethod.OnUrlClickListener;
+
+
+
+
 
 public class MyListFragment extends ListFragment implements LoaderCallbacks<String[][]>{// LoaderCallbacksのジェネリクスには、Loaderの戻り値の型を指定する(今回はString)。Workerを作成、実行、結果を受け取るクラス。
   //  private ArrayAdapter<String> adapter;①
-
+    private ArrayList<Item> objects;
     public FragListAdapter adapter;
+    private TextView tv;
+    private AlertDialog.Builder builder;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -70,8 +86,50 @@ public class MyListFragment extends ListFragment implements LoaderCallbacks<Stri
 
     @Override
     public void onListItemClick(ListView l,View v,int pos,long id) {
-        showDetails(pos);
+       // showDetails(pos);
+
+        builder = new AlertDialog.Builder(getActivity());
+        Item items = objects.get(pos);
+        CharSequence URL = items.getURL();
+        builder.setTitle(items.getTitle());
+        CharSequence descr = items.getDescription();
+        String string = (String) descr;
+        CharSequence cs1 = Html.fromHtml(string);
+        tv = new TextView(getActivity());
+        // tv.setAutoLinkMask(Linkify.WEB_URLS);
+        ScrollView sv = new ScrollView(getActivity());
+        sv.addView(tv);
+        builder.setView(sv);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+        tv.setText(cs1);
+        //String url = URL.toString();
+        //toastMake(url, 180, 30);
+        //webViewに飛ばす
+        HandleableLinkMovementMethod linkMethod = new HandleableLinkMovementMethod();
+        linkMethod.setOnUrlClickListener(new OnUrlClickListener() {
+            @Override
+            public void onUrlClick(Uri uri) {
+                // ここでuriを使ってWebView表示用のIntentを飛ばしたりする
+                String URI = String.valueOf(uri);
+                System.out.println(URI);
+                dialog.dismiss();
+                toastMake(URI, 180, 30);
+                Intent intent=new Intent(getActivity(),DetailActivity.class);
+                intent.putExtra("URI",URI);
+                getActivity().startActivity(intent);
+            }
+        });
+        tv.setMovementMethod(linkMethod);
     }
+
+
+    private void toastMake(String message, int x, int y){
+        Toast toast = Toast.makeText(getActivity(), message, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER|Gravity.LEFT, x, y);
+        toast.show();
+    }
+
     private void showDetails(int index) {
         //    Context context=getActivity().getApplication();
             getListView().setItemChecked(index,false);
@@ -101,7 +159,7 @@ public class MyListFragment extends ListFragment implements LoaderCallbacks<Stri
         //setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, data) );
         System.out.println("finish");
         System.out.println(data[1][1]);
-        ArrayList<Item> objects = new ArrayList<Item>();/////
+        objects = new ArrayList<Item>();/////
         //   for(int l=0;l<4;l++){
         //     System.out.println(tagurl[l]);
         // }
@@ -123,7 +181,8 @@ public class MyListFragment extends ListFragment implements LoaderCallbacks<Stri
         for(int i=1; i<19; i++){
             itemcontents = new Item();
             itemcontents.setTitle(data[0][i]);
-            itemcontents.setPubDate(data[1][i+1]);
+            itemcontents.setURL(data[1][i + 1]);
+            itemcontents.setDescription(data[2][i]);
             objects.add(itemcontents);
          //   itemtitle[i] = new Item();
          //   itemtitle[i].setTitle(data[0][i]);

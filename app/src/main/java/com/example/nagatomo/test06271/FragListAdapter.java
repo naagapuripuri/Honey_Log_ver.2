@@ -36,7 +36,11 @@ public class FragListAdapter extends ArrayAdapter<Item> {
             textView.setMinimumHeight(11);
             textView.setTextColor(Color.parseColor("blue"));
             TextView textView2 = (TextView)view.findViewById(R.id.item_pubdate);
-            textView2.setText(item.getPubDate());
+            textView2.setText(item.getURL());
+            TextView textView3 = (TextView)view.findViewById(R.id.item_descr);
+            textView3.setText(item.getDescription());
+
+
         }
         return view;//viewを返す
     }

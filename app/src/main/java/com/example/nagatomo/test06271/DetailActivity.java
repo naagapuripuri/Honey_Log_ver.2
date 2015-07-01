@@ -1,6 +1,7 @@
 package com.example.nagatomo.test06271;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Xml;
@@ -15,6 +16,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import android.app.LoaderManager;
 import android.content.Loader;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
 /**
  * Created by Nagatomo on 2015/06/28.
  */
@@ -29,44 +33,15 @@ public class DetailActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_detail);
 
-        System.out.println("標準出力です。");
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
-        HttpURLConnection http = null;
-        InputStream in = null;
-        try {
-            //URL で指定されたコンテンツを HTTP で取得する大まかな流れは以下
-            URL url ;                                          //クラスの参照型変数の宣言
-            url = new URL("http://news.livedoor.com/topics/rss/top.xml");                  //クラスのインスタンスを生成し、その参照を参照型変数に入れる。URL オブジェクトを生成する。
-            http = (HttpURLConnection) url.openConnection();   //接続用HttpURLConnectionオブジェクト作成。サイトに接続
-            http.setRequestMethod("GET");                      // リクエストメソッドの設定 （デフォルトが GET メソッドなので省略可）。プロトコルの設定
-            http.connect();                                    //接続する．
-            in = http.getInputStream();                        // ネット上のファイルを開く。
-            String src = "";                                   // InputStreamから取得したbyteデータを文字列にして保持するための変数。初期値として空文字（長さが0の文字列）
-            byte[] line = new byte[1024];                      // InputStreamからbyteデータを取得するための変数
-            int size;
-            while (true) {                                     // while内で、InputStreamからのデータを文字列として取得する
-                size = in.read(line);                          //ネット上のファイルから１バイトのデータが読み取られ、int型の変数にセット
-                if (size <= 0)
-                    break;
-                src += new String(line);
-            }
+        Intent intent = getIntent();
+        String URI = intent.getStringExtra("URI");
+        System.out.println(URI);
+        WebView webView = (WebView)findViewById(R.id.webview);
+        webView.setWebViewClient(new WebViewClient());
+        webView.loadUrl(URI);
 
-            System.out.println("標準出力です。2");
-            System.out.println(src);
 
-        } catch (Exception e) {
-            //  web.setText(e.toString());
-            Log.d("catch", "エラー");
-        } finally {
-            try {
-                if (http != null)
-                    http.disconnect();
-                if (in != null)
-                    in.close();
-            } catch (Exception e) {
-            }
-          }
     }
 }

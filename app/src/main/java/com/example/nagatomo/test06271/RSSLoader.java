@@ -21,6 +21,7 @@ public class RSSLoader extends AsyncTaskLoader<String[][]>{//非同期処理を�
     String src;
     int titlecount =0;
     int urlcount =0;
+    int descrcount =0;
     private String[][] data;
     public RSSLoader(Context context) {
         super(context);
@@ -65,7 +66,7 @@ public class RSSLoader extends AsyncTaskLoader<String[][]>{//非同期処理を�
             }
 */
             target = new String[20];
-            array2dim = new String[2][20];
+            array2dim = new String[3][20];
             XmlPullParser xmlPullParser = Xml.newPullParser();
             Fragment1 s1 = new Fragment1();
             String s = s1.RSS_FEED_URL;
@@ -93,6 +94,10 @@ public class RSSLoader extends AsyncTaskLoader<String[][]>{//非同期処理を�
                         Log.d("XmlPullParserSampleUrl",  urltag );
                         array2dim[1][urlcount] =  urltag ;
                         urlcount = urlcount +1;
+                    }
+                    else if("description".equals(htmlsrc)){
+                        array2dim[2][descrcount] =  xmlPullParser.nextText();;
+                        descrcount = descrcount +1;
                     }
                 }
             }

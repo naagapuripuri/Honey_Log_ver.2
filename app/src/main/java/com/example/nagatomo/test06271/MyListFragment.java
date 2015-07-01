@@ -183,6 +183,8 @@ public class MyListFragment extends ListFragment implements LoaderCallbacks<Stri
             itemcontents.setTitle(data[0][i]);
             itemcontents.setURL(data[1][i + 1]);
             itemcontents.setDescription(data[2][i]);
+            data[3][i-1] = data[3][i-1].replaceAll("\\+0900", "");
+            itemcontents.setPubDate(data[3][i-1]);
             objects.add(itemcontents);
          //   itemtitle[i] = new Item();
          //   itemtitle[i].setTitle(data[0][i]);

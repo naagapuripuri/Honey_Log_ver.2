@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
         actionBar.setSubtitle("sub!");
         colorDrawable.setColor(0xffFEBB31);
         actionBar.setBackgroundDrawable(colorDrawable);
-        actionBar.setStackedBackgroundDrawable(new ColorDrawable(Color.parseColor("#B5C0D0")));
+        actionBar.setStackedBackgroundDrawable(new ColorDrawable(Color.parseColor("#000000")));
 
 
 
@@ -41,6 +41,28 @@ public class MainActivity extends Activity {
         actionBar.addTab(actionBar.newTab().setText("IT/経済").setTabListener(new MyTabListener(fragmet4)));
         Fragment fragmet5 = new Fragment5();
         actionBar.addTab(actionBar.newTab().setText("entertainment").setTabListener(new MyTabListener(fragmet5)));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
 

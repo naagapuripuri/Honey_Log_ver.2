@@ -1,12 +1,19 @@
 package com.example.nagatomo.test06271;
 
+import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -15,8 +22,10 @@ import java.util.ArrayList;
  */
 public class MyListFragmentJapan extends ListFragment implements LoaderManager.LoaderCallbacks<String[][]> {// LoaderCallbacksのジェネリクスには、Loaderの戻り値の型を指定する(今回はString)。Workerを作成、実行、結果を受け取るクラス。
     //  private ArrayAdapter<String> adapter;①
-
+    private ArrayList<Item> objects;
     public FragListAdapter adapter;
+    private TextView tv;
+    private AlertDialog.Builder builder;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -72,8 +81,50 @@ public class MyListFragmentJapan extends ListFragment implements LoaderManager.L
 
     @Override
     public void onListItemClick(ListView l,View v,int pos,long id) {
-        showDetails(pos);
+        // showDetails(pos);
+
+        builder = new AlertDialog.Builder(getActivity());
+        Item items = objects.get(pos);
+        CharSequence URL = items.getURL();
+        builder.setTitle(items.getTitle());
+        CharSequence descr = items.getDescription();
+        String string = (String) descr;
+        CharSequence cs1 = Html.fromHtml(string);
+        tv = new TextView(getActivity());
+        // tv.setAutoLinkMask(Linkify.WEB_URLS);
+        ScrollView sv = new ScrollView(getActivity());
+        sv.addView(tv);
+        builder.setView(sv);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+        tv.setText(cs1);
+        //String url = URL.toString();
+        //toastMake(url, 180, 30);
+        //webViewに飛ばす
+        HandleableLinkMovementMethod linkMethod = new HandleableLinkMovementMethod();
+        linkMethod.setOnUrlClickListener(new HandleableLinkMovementMethod.OnUrlClickListener() {
+            @Override
+            public void onUrlClick(Uri uri) {
+                // ここでuriを使ってWebView表示用のIntentを飛ばしたりする
+                String URI = String.valueOf(uri);
+                System.out.println(URI);
+                dialog.dismiss();
+                toastMake(URI, 180, 30);
+                Intent intent=new Intent(getActivity(),DetailActivity.class);
+                intent.putExtra("URI",URI);
+                getActivity().startActivity(intent);
+            }
+        });
+        tv.setMovementMethod(linkMethod);
     }
+
+
+    private void toastMake(String message, int x, int y){
+        Toast toast = Toast.makeText(getActivity(), message, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER|Gravity.LEFT, x, y);
+        toast.show();
+    }
+
     private void showDetails(int index) {
         //    Context context=getActivity().getApplication();
         getListView().setItemChecked(index,false);
@@ -103,7 +154,7 @@ public class MyListFragmentJapan extends ListFragment implements LoaderManager.L
         //setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, data) );
         System.out.println("finish");
         System.out.println(data[1][1]);
-        ArrayList<Item> objects = new ArrayList<Item>();/////
+        objects = new ArrayList<Item>();/////
         //   for(int l=0;l<4;l++){
         //     System.out.println(tagurl[l]);
         // }
@@ -125,7 +176,10 @@ public class MyListFragmentJapan extends ListFragment implements LoaderManager.L
         for(int i=1; i<19; i++){
             itemcontents = new Item();
             itemcontents.setTitle(data[0][i]);
-            itemcontents.setPubDate(data[1][i+1]);
+            itemcontents.setURL(data[1][i + 1]);
+            itemcontents.setDescription(data[2][i]);
+            data[3][i-1] = data[3][i-1].replaceAll("\\+0900", "");
+            itemcontents.setPubDate(data[3][i-1]);
             objects.add(itemcontents);
             //   itemtitle[i] = new Item();
             //   itemtitle[i].setTitle(data[0][i]);

@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
         Fragment fragmet3 = new Fragment3();
         actionBar.addTab(actionBar.newTab().setText("overseas").setTabListener(new MyTabListener(fragmet3)));
         Fragment fragmet4 = new Fragment4();
-        actionBar.addTab(actionBar.newTab().setText("IT/経済").setTabListener(new MyTabListener(fragmet4)));
+        actionBar.addTab(actionBar.newTab().setText("IT/Economy").setTabListener(new MyTabListener(fragmet4)));
         Fragment fragmet5 = new Fragment5();
         actionBar.addTab(actionBar.newTab().setText("entertainment").setTabListener(new MyTabListener(fragmet5)));
     }

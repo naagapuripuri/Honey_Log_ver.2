@@ -15,12 +15,14 @@ import java.net.URLConnection;
 /**
  * Created by Nagatomo on 2015/07/01.
  */
-public class RSSLoaderJapan extends AsyncTaskLoader<String[][]> {//非同期処理を行うクラス。非同期で動作するクラス。必要なのはsuperにコンテキストを渡すコンストラクタと非同期処理を行うloadInBackground()。
+public class RSSLoaderJapan extends AsyncTaskLoader<String[][]>{//非同期処理を行うクラス。非同期で動作するクラス。必要なのはsuperにコンテキストを渡すコンストラクタと非同期処理を行うloadInBackground()。
     String[] target;
     String[][] array2dim;
     String src;
     int titlecount =0;
     int urlcount =0;
+    int descrcount =0;
+    int timecount =0;
     private String[][] data;
     public RSSLoaderJapan(Context context) {
         super(context);
@@ -65,7 +67,7 @@ public class RSSLoaderJapan extends AsyncTaskLoader<String[][]> {//非同期処�
             }
 */
             target = new String[20];
-            array2dim = new String[2][20];
+            array2dim = new String[4][20];
             XmlPullParser xmlPullParser = Xml.newPullParser();
             Fragment2 s2 = new Fragment2();
             String s = s2.RSS_FEED_URL;
@@ -93,6 +95,14 @@ public class RSSLoaderJapan extends AsyncTaskLoader<String[][]> {//非同期処�
                         Log.d("XmlPullParserSampleUrl",  urltag );
                         array2dim[1][urlcount] =  urltag ;
                         urlcount = urlcount +1;
+                    }
+                    else if("description".equals(htmlsrc)){
+                        array2dim[2][descrcount] =  xmlPullParser.nextText();;
+                        descrcount = descrcount +1;
+                    }
+                    else if("pubDate".equals(htmlsrc)){
+                        array2dim[3][timecount] =  xmlPullParser.nextText();;
+                        timecount = timecount +1;
                     }
                 }
             }

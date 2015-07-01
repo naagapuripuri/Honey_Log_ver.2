@@ -13,6 +13,7 @@ import android.view.ViewGroup;
  * Created by Nagatomo on 2015/06/30.
  */
 public class Fragment5 extends Fragment {
+    String RSS_FEED_URL = "http://news.livedoor.com/topics/rss/ent.xml";
     static final String TAG = "FragmentTest";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

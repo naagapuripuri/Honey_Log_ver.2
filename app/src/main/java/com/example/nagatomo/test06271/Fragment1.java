@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class Fragment1 extends Fragment {
-    private static final String RSS_FEED_URL = "http://news.livedoor.com/topics/rss/top.xml ";
+    String RSS_FEED_URL = "http://news.livedoor.com/topics/rss/top.xml ";
     static final String TAG = "FragmentTest";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

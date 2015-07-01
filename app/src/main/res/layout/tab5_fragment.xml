@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/booklistFragment5"
-        android:name="com.example.nagatomo.test06271.MyListFragment"
+        android:name="com.example.nagatomo.test06271.MyListFragmentArtistry"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

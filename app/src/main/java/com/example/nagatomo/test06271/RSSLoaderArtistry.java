@@ -1,8 +1,5 @@
 package com.example.nagatomo.test06271;
 
-/**
- * Created by Nagatomo on 2015/06/30.
- */
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.util.Log;
@@ -15,14 +12,17 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class RSSLoader extends AsyncTaskLoader<String[][]>{//非同期処理を行うクラス。非同期で動作するクラス。必要なのはsuperにコンテキストを渡すコンストラクタと非同期処理を行うloadInBackground()。
+/**
+ * Created by Nagatomo on 2015/07/01.
+ */
+public class RSSLoaderArtistry extends AsyncTaskLoader<String[][]> {//非同期処理を行うクラス。非同期で動作するクラス。必要なのはsuperにコンテキストを渡すコンストラクタと非同期処理を行うloadInBackground()。
     String[] target;
     String[][] array2dim;
     String src;
     int titlecount =0;
     int urlcount =0;
     private String[][] data;
-    public RSSLoader(Context context) {
+    public RSSLoaderArtistry(Context context) {
         super(context);
     }
 
@@ -67,8 +67,8 @@ public class RSSLoader extends AsyncTaskLoader<String[][]>{//非同期処理を�
             target = new String[20];
             array2dim = new String[2][20];
             XmlPullParser xmlPullParser = Xml.newPullParser();
-            Fragment1 s1 = new Fragment1();
-            String s = s1.RSS_FEED_URL;
+            Fragment5 s5 = new Fragment5();
+            String s = s5.RSS_FEED_URL;
             //String s = "http://news.livedoor.com/topics/rss/top.xml";
             URL Url = new URL(s);
             URLConnection connection = Url.openConnection();
@@ -113,9 +113,9 @@ public class RSSLoader extends AsyncTaskLoader<String[][]>{//非同期処理を�
         return array2dim;
     }
 
-  //  @Override
-  //  protected void onStartLoading() {// Loader開始時に呼ばれる
-      //  forceLoad();// Loaderを開始
+    //  @Override
+    //  protected void onStartLoading() {// Loader開始時に呼ばれる
+    //  forceLoad();// Loaderを開始
     //}
 
     @Override

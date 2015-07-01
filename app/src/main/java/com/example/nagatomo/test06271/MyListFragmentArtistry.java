@@ -1,18 +1,20 @@
 package com.example.nagatomo.test06271;
 
-import android.graphics.Color;
-import android.os.Bundle;
 import android.app.ListFragment;
+import android.app.LoaderManager;
+import android.content.Intent;
+import android.content.Loader;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
-import android.content.Intent;
-import java.util.List;
-import java.util.ArrayList;
-import android.app.LoaderManager.LoaderCallbacks;
-import android.content.Loader;
 
-public class MyListFragment extends ListFragment implements LoaderCallbacks<String[][]>{// LoaderCallbacksのジェネリクスには、Loaderの戻り値の型を指定する(今回はString)。Workerを作成、実行、結果を受け取るクラス。
-  //  private ArrayAdapter<String> adapter;①
+import java.util.ArrayList;
+
+/**
+ * Created by Nagatomo on 2015/07/01.
+ */
+public class MyListFragmentArtistry extends ListFragment implements LoaderManager.LoaderCallbacks<String[][]> {// LoaderCallbacksのジェネリクスには、Loaderの戻り値の型を指定する(今回はString)。Workerを作成、実行、結果を受け取るクラス。
+    //  private ArrayAdapter<String> adapter;①
 
     public FragListAdapter adapter;
 
@@ -62,8 +64,8 @@ public class MyListFragment extends ListFragment implements LoaderCallbacks<Stri
           }
           adapter = new FragListAdapter(getActivity(), objects);  ///////*/
           /* ここまでを消して下の1文と①を入れると、MyListの方とりにいく*///
-             //         adapter = new ArrayAdapter<String>( getActivity(), android.R.layout.simple_list_item_1,MyList.Data);
-     ///////////////     setListAdapter(adapter);
+        //         adapter = new ArrayAdapter<String>( getActivity(), android.R.layout.simple_list_item_1,MyList.Data);
+        ///////////////     setListAdapter(adapter);
         //getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
@@ -74,11 +76,11 @@ public class MyListFragment extends ListFragment implements LoaderCallbacks<Stri
     }
     private void showDetails(int index) {
         //    Context context=getActivity().getApplication();
-            getListView().setItemChecked(index,false);
+        getListView().setItemChecked(index,false);
         //    Intent intent=new Intent(context,DetailActivity.class);
-            Intent intent=new Intent(getActivity(),DetailActivity.class);
-       //     intent.putExtra("index",index);
-            getActivity().startActivity(intent);
+        Intent intent=new Intent(getActivity(),DetailActivity.class);
+        //     intent.putExtra("index",index);
+        getActivity().startActivity(intent);
     }
 
 
@@ -91,8 +93,8 @@ public class MyListFragment extends ListFragment implements LoaderCallbacks<Stri
 
 
     @Override
-    public RSSLoader onCreateLoader(int arg0, Bundle arg1) {//ワーカーの作成など、非同期処理の初期化
-        return new RSSLoader(getActivity());  //
+    public RSSLoaderArtistry onCreateLoader(int arg0, Bundle arg1) {//ワーカーの作成など、非同期処理の初期化
+        return new RSSLoaderArtistry(getActivity());  //
     }
 
     // after bg process invoke onLoadFinished() who work in ui thread
@@ -117,28 +119,28 @@ public class MyListFragment extends ListFragment implements LoaderCallbacks<Stri
         item3.setTitle(s3);
 
 */
-       // Item itemtitle[] = new Item[20];
-       // Item itemurl[] = new Item[20];
+        // Item itemtitle[] = new Item[20];
+        // Item itemurl[] = new Item[20];
         Item itemcontents = null;
         for(int i=1; i<19; i++){
             itemcontents = new Item();
             itemcontents.setTitle(data[0][i]);
             itemcontents.setPubDate(data[1][i+1]);
             objects.add(itemcontents);
-         //   itemtitle[i] = new Item();
-         //   itemtitle[i].setTitle(data[0][i]);
-         //   itemurl[i] = new Item();
-         //   itemurl[i].setPubDate(data[1][i]);
+            //   itemtitle[i] = new Item();
+            //   itemtitle[i].setTitle(data[0][i]);
+            //   itemurl[i] = new Item();
+            //   itemurl[i].setPubDate(data[1][i]);
         }
-      //  item[0].setTitle("４");
-       // item[1].setTitle("ご");
-       // item[2].setTitle("しっくす");
- //       objects.add(item1);
- //       objects.add(item2);
- //       objects.add(item3);
-     //   for(int j = 1 ;j<15 ;j++){
-     //       objects.add(itemtitle[j]);
-     //   }
+        //  item[0].setTitle("４");
+        // item[1].setTitle("ご");
+        // item[2].setTitle("しっくす");
+        //       objects.add(item1);
+        //       objects.add(item2);
+        //       objects.add(item3);
+        //   for(int j = 1 ;j<15 ;j++){
+        //       objects.add(itemtitle[j]);
+        //   }
 
         adapter = new FragListAdapter(getActivity(), objects);
         setListAdapter(adapter);
@@ -150,4 +152,3 @@ public class MyListFragment extends ListFragment implements LoaderCallbacks<Stri
 
     }
 }
-

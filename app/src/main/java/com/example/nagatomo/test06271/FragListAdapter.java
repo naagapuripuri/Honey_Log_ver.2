@@ -31,7 +31,12 @@ public class FragListAdapter extends ArrayAdapter<Item> {
 
             TextView textView = (TextView)view.findViewById(R.id.item_title);
             textView.setText(item.getTitle());
-
+            textView.setTextSize(11);
+            textView.setHeight(11);
+            textView.setMinimumHeight(11);
+            textView.setTextColor(Color.parseColor("blue"));
+            TextView textView2 = (TextView)view.findViewById(R.id.item_pubdate);
+            textView2.setText(item.getPubDate());
         }
         return view;//viewを返す
     }

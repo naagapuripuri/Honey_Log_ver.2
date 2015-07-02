@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bkg2"
+    android:background="@drawable/bkg10"
     android:orientation="horizontal">
 
 
@@ -12,22 +12,22 @@
         android:id="@+id/imageView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:src="@drawable/top"
+        android:src="@drawable/gourmet"
         android:paddingTop="10px" />
 
     <ImageView
         android:layout_width="300px"
         android:layout_height="150px"
         android:id="@+id/imageView2"
-        android:layout_alignRight="@+id/booklistFragment1"
-        android:layout_alignEnd="@+id/booklistFragment1"
+        android:layout_alignRight="@+id/booklistFragment8"
+        android:layout_alignEnd="@+id/booklistFragment8"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/imageView" />
 
     <fragment
-        android:id="@+id/booklistFragment1"
-        android:name="com.example.nagatomo.test06271.MyListFragment"
+        android:id="@+id/booklistFragment8"
+        android:name="com.example.nagatomo.test06271.MyListFragmentGourmet"
         android:layout_width="match_parent"
         android:layout_height="380dp"
         android:layout_alignParentBottom="true"

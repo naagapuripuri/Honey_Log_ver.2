@@ -20,7 +20,7 @@ import java.util.ArrayList;
 /**
  * Created by Nagatomo on 2015/07/01.
  */
-public class MyListFragmentArtistry extends ListFragment implements LoaderManager.LoaderCallbacks<String[][]> {// LoaderCallbacksのジェネリクスには、Loaderの戻り値の型を指定する(今回はString)。Workerを作成、実行、結果を受け取るクラス。
+public class MyListFragmentGourmet extends ListFragment implements LoaderManager.LoaderCallbacks<String[][]> {// LoaderCallbacksのジェネリクスには、Loaderの戻り値の型を指定する(今回はString)。Workerを作成、実行、結果を受け取るクラス。
     //  private ArrayAdapter<String> adapter;①
     private ArrayList<Item> objects;
     public FragListAdapter adapter;
@@ -144,8 +144,8 @@ public class MyListFragmentArtistry extends ListFragment implements LoaderManage
 
 
     @Override
-    public RSSLoaderArtistry onCreateLoader(int arg0, Bundle arg1) {//ワーカーの作成など、非同期処理の初期化
-        return new RSSLoaderArtistry(getActivity());  //
+    public RSSLoaderGourmet onCreateLoader(int arg0, Bundle arg1) {//ワーカーの作成など、非同期処理の初期化
+        return new RSSLoaderGourmet(getActivity());  //
     }
 
     // after bg process invoke onLoadFinished() who work in ui thread
@@ -178,7 +178,7 @@ public class MyListFragmentArtistry extends ListFragment implements LoaderManage
             itemcontents.setTitle(data[0][i]);
             itemcontents.setURL(data[1][i + 1]);
             itemcontents.setDescription(data[2][i]);
-            data[3][i-1] = data[3][i-1].replaceAll("\\+0900", "");
+        //    data[3][i-1] = data[3][i-1].replaceAll("\\+0900", "");
             itemcontents.setPubDate(data[3][i-1]);
             objects.add(itemcontents);
             //   itemtitle[i] = new Item();

@@ -19,7 +19,7 @@ public class MainActivity extends Activity {
         ColorDrawable colorDrawable = new ColorDrawable();
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        actionBar.setTitle("Heell!");
+        actionBar.setTitle("Honey Log");
         actionBar.setSubtitle("sub!");
         colorDrawable.setColor(0xffFEBB31);
         actionBar.setBackgroundDrawable(colorDrawable);
@@ -41,6 +41,14 @@ public class MainActivity extends Activity {
         actionBar.addTab(actionBar.newTab().setText("IT/Economy").setTabListener(new MyTabListener(fragmet4)));
         Fragment fragmet5 = new Fragment5();
         actionBar.addTab(actionBar.newTab().setText("entertainment").setTabListener(new MyTabListener(fragmet5)));
+        Fragment fragment6 = new Fragment6();
+        actionBar.addTab(actionBar.newTab().setText("sports").setTabListener(new MyTabListener(fragment6)));
+        Fragment fragment7 = new Fragment7();
+        actionBar.addTab(actionBar.newTab().setText("movie").setTabListener(new MyTabListener(fragment7)));
+        Fragment fragment8 = new Fragment8();
+        actionBar.addTab(actionBar.newTab().setText("gourmet").setTabListener(new MyTabListener(fragment8)));
+        Fragment fragment9 = new Fragment9();
+        actionBar.addTab(actionBar.newTab().setText("girls").setTabListener(new MyTabListener(fragment9)));
     }
 
     @Override

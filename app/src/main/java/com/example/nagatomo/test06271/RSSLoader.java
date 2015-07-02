@@ -47,53 +47,33 @@ public class RSSLoader extends AsyncTaskLoader<String[][]>{//非同期処理を�
         HttpURLConnection http = null;
         InputStream in = null;
         try {
-      /*
-            //URL で指定されたコンテンツを HTTP で取得する大まかな流れは以下
-            URL url ;                                          //クラスの参照型変数の宣言
-            url = new URL("http://news.livedoor.com/topics/rss/top.xml");                  //クラスのインスタンスを生成し、その参照を参照型変数に入れる。URL オブジェクトを生成する。
-            http = (HttpURLConnection) url.openConnection();   //接続用HttpURLConnectionオブジェクト作成。サイトに接続
-            http.setRequestMethod("GET");                      // リクエストメソッドの設定 （デフォルトが GET メソッドなので省略可）。プロトコルの設定
-            http.connect();                                    //接続する．
-            in = http.getInputStream();                        // ネット上のファイルを開く。
-
-            src = "";                                   // InputStreamから取得したbyteデータを文字列にして保持するための変数。初期値として空文字（長さが0の文字列）
-            byte[] line = new byte[1024];                      // InputStreamからbyteデータを取得するための変数
-            int size;
-            while (true) {                                     // while内で、InputStreamからのデータを文字列として取得する
-                size = in.read(line);                          //ネット上のファイルから１バイトのデータが読み取られ、int型の変数にセット
-                if (size <= 0)
-                    break;
-                src += new String(line);
-            }
-*/
-            target = new String[20];
+           // target = new String[20];
             array2dim = new String[4][20];
             XmlPullParser xmlPullParser = Xml.newPullParser();
             Fragment1 s1 = new Fragment1();
             String s = s1.RSS_FEED_URL;
-            //String s = "http://news.livedoor.com/topics/rss/top.xml";
             URL Url = new URL(s);
             URLConnection connection = Url.openConnection();
             xmlPullParser.setInput(connection.getInputStream(), "UTF-8");
 
-            int eventType;
-            while ((eventType = xmlPullParser.next()) != XmlPullParser.END_DOCUMENT) {
+            int eventType = xmlPullParser.getEventType();
+            while (eventType  != XmlPullParser.END_DOCUMENT) {
                 String htmlsrc = null;
                 String titletag = null;
                 String urltag = null;
                 if (eventType == XmlPullParser.START_TAG) {
                     htmlsrc = xmlPullParser.getName();
                     if("title".equals(htmlsrc)){
-                        titletag = xmlPullParser.nextText();
-                        Log.d("XmlPullParserSampleUrl", titletag);
-                        target[titlecount] = titletag;
-                        array2dim[0][titlecount] = titletag;
+                   //     titletag = xmlPullParser.nextText();
+                   //     Log.d("XmlPullParserSampleUrl",  xmlPullParser.nextText());
+                   //     target[titlecount] =  xmlPullParser.nextText();
+                        array2dim[0][titlecount] =  xmlPullParser.nextText();
                         titlecount = titlecount +1;
                     }
                     else if("link".equals(htmlsrc)){
-                        urltag  = xmlPullParser.nextText();
-                        Log.d("XmlPullParserSampleUrl",  urltag );
-                        array2dim[1][urlcount] =  urltag ;
+                   //     urltag  = xmlPullParser.nextText();
+                   //     Log.d("XmlPullParserSampleUrl",  xmlPullParser.nextText() );
+                        array2dim[1][urlcount] =   xmlPullParser.nextText() ;
                         urlcount = urlcount +1;
                     }
                     else if("description".equals(htmlsrc)){
@@ -105,18 +85,10 @@ public class RSSLoader extends AsyncTaskLoader<String[][]>{//非同期処理を�
                         timecount = timecount +1;
                     }
                 }
+                eventType = xmlPullParser.next();
             }
         } catch (Exception e) {
-            //  web.setText(e.toString());
-            Log.d("catch", "エラー");
-        } finally {
-            try {
-                if (http != null)
-                    http.disconnect();
-                if (in != null)
-                    in.close();
-            } catch (Exception e) {
-            }
+            e.printStackTrace();
         }
 
         //target[0] = src;

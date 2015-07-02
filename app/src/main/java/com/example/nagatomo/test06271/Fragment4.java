@@ -12,6 +12,7 @@ import android.app.FragmentManager;
 import java.util.ArrayList;
 
 public class Fragment4 extends Fragment {
+    String RSS_FEED_URL = "http://news.livedoor.com/topics/rss/eco.xml ";
     static final String TAG = "FragmentTest";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -15,7 +15,7 @@ import java.net.URLConnection;
 /**
  * Created by Nagatomo on 2015/07/01.
  */
-public class RSSLoaderArtistry extends AsyncTaskLoader<String[][]>{//非同期処理を行うクラス。非同期で動作するクラス。必要なのはsuperにコンテキストを渡すコンストラクタと非同期処理を行うloadInBackground()。
+public class RSSLoaderSports extends AsyncTaskLoader<String[][]> {//非同期処理を行うクラス。非同期で動作するクラス。必要なのはsuperにコンテキストを渡すコンストラクタと非同期処理を行うloadInBackground()。
     String[] target;
     String[][] array2dim;
     String src;
@@ -24,7 +24,7 @@ public class RSSLoaderArtistry extends AsyncTaskLoader<String[][]>{//非同期�
     int descrcount =0;
     int timecount =0;
     private String[][] data;
-    public RSSLoaderArtistry(Context context) {
+    public RSSLoaderSports(Context context) {
         super(context);
     }
 
@@ -69,8 +69,8 @@ public class RSSLoaderArtistry extends AsyncTaskLoader<String[][]>{//非同期�
             target = new String[20];
             array2dim = new String[4][20];
             XmlPullParser xmlPullParser = Xml.newPullParser();
-            Fragment5 s5 = new Fragment5();
-            String s = s5.RSS_FEED_URL;
+            Fragment6 s6 = new Fragment6();
+            String s = s6.RSS_FEED_URL;
             //String s = "http://news.livedoor.com/topics/rss/top.xml";
             URL Url = new URL(s);
             URLConnection connection = Url.openConnection();
